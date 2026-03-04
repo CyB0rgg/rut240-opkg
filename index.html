@@ -12,14 +12,14 @@
   :root {
     --bg: #0a0a0f;
     --surface: #12121a;
-    --border: #1a1a2e;
+    --border: #2a2a3e;
     --cyan: #00f0ff;
-    --red: #ff003c;
+    --red: #e8575a;
     --yellow: #fcee0a;
     --green: #39ff14;
     --text: #c8c8d0;
     --dim: #5a5a6e;
-    --code-bg: #0d0d14;
+    --code-bg: #181824;
   }
 
   body {
@@ -94,7 +94,7 @@
     letter-spacing: 0.05em;
   }
 
-  .badge-red { color: var(--red); border-color: rgba(255, 0, 60, 0.3); }
+  .badge-red { color: var(--red); border-color: rgba(232, 87, 90, 0.3); }
   .badge-cyan { color: var(--cyan); border-color: rgba(0, 240, 255, 0.3); }
   .badge-yellow { color: var(--yellow); border-color: rgba(252, 238, 10, 0.3); }
 
@@ -110,7 +110,7 @@
     letter-spacing: 0.12em;
     margin-bottom: 1rem;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid rgba(255, 0, 60, 0.2);
+    border-bottom: 1px solid rgba(232, 87, 90, 0.2);
   }
 
   .section-title::before {
@@ -219,7 +219,7 @@
 
   .pkg-table td {
     padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid rgba(26, 26, 46, 0.5);
+    border-bottom: 1px solid var(--border);
   }
 
   .pkg-table tr:hover {
@@ -240,7 +240,7 @@
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.7rem;
     color: var(--red);
-    border: 1px solid rgba(255, 0, 60, 0.3);
+    border: 1px solid rgba(232, 87, 90, 0.3);
     padding: 0.1rem 0.35rem;
     border-radius: 2px;
     margin-left: 0.4rem;
