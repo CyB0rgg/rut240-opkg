@@ -20,15 +20,31 @@ Teltonika's official package repository ships several packages compiled against 
 
 ## Installation
 
+This feed is signed with [usign](https://git.openwrt.org/project/usign.git). RUT240 firmware verifies package signatures by default (`option check_signature` in `/etc/opkg.conf`).
+
+### 1. Add the signing key (one-time)
+
 ```bash
-# Add this feed to your RUT240
+# Download the public key (fingerprint: 99d9bdd209118a07)
+wget -q -O /etc/opkg/keys/99d9bdd209118a07 \
+  https://raw.githubusercontent.com/CyB0rgg/rut240-opkg/main/signing.pub
+```
+
+### 2. Add the feed (one-time)
+
+```bash
 echo "src/gz rut240_community https://cyb0rgg.github.io/rut240-opkg/packages" \
   >> /etc/opkg/customfeeds.conf
-
-# Install packages
-opkg update
-opkg install radsecproxy
 ```
+
+### 3. Install
+
+```bash
+opkg update
+opkg install radsecproxy --force-depends --force-overwrite
+```
+
+`--force-depends` is needed because `libopenssl3` is pre-installed in the firmware but not always registered in opkg's package database. `--force-overwrite` handles shared library conflicts with Teltonika's pre-installed `libmosquitto-ssl`.
 
 ## Building
 
