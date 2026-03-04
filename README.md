@@ -49,12 +49,10 @@ opkg update
 opkg install radsecproxy --force-depends --force-overwrite
 
 # vim-full (replaces busybox vi)
-opkg install vim-full
+opkg install vim-full --force-depends
 ```
 
-`--force-depends` is needed for radsecproxy because `libopenssl3` is pre-installed in the firmware but not always registered in opkg's package database. `--force-overwrite` handles shared library conflicts with Teltonika's pre-installed `libmosquitto-ssl`.
-
-vim-full installs cleanly — `libncurses6` and `terminfo` are pulled in as dependencies automatically.
+**Why `--force-depends`?** Teltonika's official package repository ships broken versions of both `radsecproxy` and `vim-full` — compiled against libraries that don't exist on current firmware (`libopenssl1.1` for radsecproxy, `libncurses6` for vim-full). When opkg sees these broken packages alongside ours, it gets confused during dependency resolution and reports "incompatible architectures" even though the packages are identical `mips_24kc`. `--force-depends` tells opkg to skip the broken candidates and install ours. `--force-overwrite` (radsecproxy only) handles a shared library conflict with Teltonika's pre-installed `libmosquitto-ssl`.
 
 ## Building
 
