@@ -15,6 +15,9 @@ Teltonika's official package repository ships several packages compiled against 
 | Package | Version | Description |
 |---------|---------|-------------|
 | `radsecproxy` | 1.11.2-1 | Generic RADIUS proxy for UDP/TLS (RadSec) |
+| `vim-full` | 9.0-1 | Vi IMproved - enhanced vi editor (Normal build) |
+| `libncurses6` | 6.4-2 | Terminal handling library (Unicode) |
+| `terminfo` | 6.4-2 | Terminal info database (ncurses) |
 | `libnettle8` | 3.9.1-1 | GNU crypto library |
 | `libgmp10` | 6.2.1-1 | GNU Multiple Precision arithmetic library |
 
@@ -41,10 +44,17 @@ echo "src/gz rut240_community https://cyb0rgg.github.io/rut240-opkg/packages" \
 
 ```bash
 opkg update
+
+# radsecproxy (RadSec/RADIUS proxy)
 opkg install radsecproxy --force-depends --force-overwrite
+
+# vim-full (replaces busybox vi)
+opkg install vim-full
 ```
 
-`--force-depends` is needed because `libopenssl3` is pre-installed in the firmware but not always registered in opkg's package database. `--force-overwrite` handles shared library conflicts with Teltonika's pre-installed `libmosquitto-ssl`.
+`--force-depends` is needed for radsecproxy because `libopenssl3` is pre-installed in the firmware but not always registered in opkg's package database. `--force-overwrite` handles shared library conflicts with Teltonika's pre-installed `libmosquitto-ssl`.
+
+vim-full installs cleanly — `libncurses6` and `terminfo` are pulled in as dependencies automatically.
 
 ## Building
 

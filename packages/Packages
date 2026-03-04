@@ -17,6 +17,25 @@ Filename: libgmp10_6.2.1-1_mips_24kc.ipk
 Size: 216892
 SHA256sum: 58a6c6c2b8cb0c038b366fa1111ca0bac937d1eff0b7bffd364da2d1e4487893
 
+Package: libncurses6
+Version: 6.4-2
+Depends: libc, terminfo
+Provides: libncursesw, libncurses, libncursesw6
+Source: feeds/base/package/libs/ncurses
+SourceName: libncurses
+License: MIT
+LicenseFiles: README
+Section: libs
+SourceDateEpoch: 1726358605
+ABIVersion: 6
+CPE-ID: cpe:/a:gnu:ncurses
+Architecture: mips_24kc
+Installed-Size: 154756
+Description:  Terminal handling library (Unicode)
+Filename: libncurses6_6.4-2_mips_24kc.ipk
+Size: 150675
+SHA256sum: efa51d1d7e33259827347313c490e7097b3bd08462bb31485cb5233d49e8af2a
+
 Package: libnettle8
 Version: 3.9.1-1
 Depends: libc, libgmp10
@@ -53,4 +72,42 @@ Description:  A generic radius proxy for UDP/TLS (RadSec)
 Filename: radsecproxy_1.11.2-1_mips_24kc.ipk
 Size: 56722
 SHA256sum: 1bafaa9786a665453117431add862249628ea985b74255b383e46a955c610e94
+
+Package: terminfo
+Version: 6.4-2
+Depends: libc
+Source: feeds/base/package/libs/ncurses
+SourceName: terminfo
+License: MIT
+LicenseFiles: README
+Section: libs
+SourceDateEpoch: 1726358605
+CPE-ID: cpe:/a:gnu:ncurses
+Architecture: mips_24kc
+Installed-Size: 8195
+Description:  Terminal Info Database (ncurses)
+Filename: terminfo_6.4-2_mips_24kc.ipk
+Size: 8880
+SHA256sum: a4cb6651aa15168b8bd0830ea4334118726969e3fa2bf2635253d42c807623d8
+
+Package: vim-full
+Version: 9.0-1
+Depends: libc, libncurses6
+Conflicts: vim
+Provides: vim
+Source: feeds/packages/utils/vim
+SourceName: vim-full
+License: Vim
+LicenseFiles: LICENSE
+Section: utils
+SourceDateEpoch: 1720607829
+CPE-ID: cpe:/a:vim:vim
+Maintainer: Marko Ratkaj <markoratkaj@gmail.com>
+Architecture: mips_24kc
+Installed-Size: 954048
+Description:  Vim is an almost compatible version of the UNIX editor Vi.
+ (Normal build)
+Filename: vim-full_9.0-1_mips_24kc.ipk
+Size: 954169
+SHA256sum: 847b5d55aa8354ad334c4050ef34df8bb3766ce6e1fb453435f4773b14bb7646
 
