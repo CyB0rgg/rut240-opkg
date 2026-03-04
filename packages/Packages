@@ -67,11 +67,11 @@ SourceDateEpoch: 1656885722
 CPE-ID: cpe:/a:uninett:radsecproxy
 Maintainer: Toke Høiland-Jørgensen <toke@toke.dk>
 Architecture: mips_24kc
-Installed-Size: 56488
+Installed-Size: 56498
 Description:  A generic radius proxy for UDP/TLS (RadSec)
 Filename: radsecproxy_1.11.2-1_mips_24kc.ipk
-Size: 56722
-SHA256sum: 1bafaa9786a665453117431add862249628ea985b74255b383e46a955c610e94
+Size: 56730
+SHA256sum: 0f8103e107b0e876a993331d37281053587732f5623597b3d1c3576e950a42b7
 
 Package: terminfo
 Version: 6.4-2
