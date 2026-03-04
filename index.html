@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUT240 Community opkg Feed</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1a1a2e;
+    --cyan: #00f0ff;
+    --red: #ff003c;
+    --yellow: #fcee0a;
+    --green: #39ff14;
+    --text: #c8c8d0;
+    --dim: #5a5a6e;
+    --code-bg: #0d0d14;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 240, 255, 0.008) 2px,
+      rgba(0, 240, 255, 0.008) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .header-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.4rem;
+    color: var(--cyan);
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.1);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  .header-sub .accent { color: var(--yellow); }
+
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-red { color: var(--red); border-color: rgba(255, 0, 60, 0.3); }
+  .badge-cyan { color: var(--cyan); border-color: rgba(0, 240, 255, 0.3); }
+  .badge-yellow { color: var(--yellow); border-color: rgba(252, 238, 10, 0.3); }
+
+  /* Sections */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255, 0, 60, 0.2);
+  }
+
+  .section-title::before {
+    content: '// ';
+    color: var(--dim);
+  }
+
+  h3 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--cyan);
+    margin: 1.5rem 0 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  h4 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--yellow);
+    margin: 1.2rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+  }
+
+  a:hover {
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+
+  strong { color: #e0e0e8; }
+
+  code {
+    font-family: 'Share Tech Mono', monospace;
+    background: var(--code-bg);
+    color: var(--cyan);
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+  }
+
+  /* Code blocks */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    margin: 0.8rem 0 1rem;
+    position: relative;
+  }
+
+  pre::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 0; right: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--dim);
+    padding: 0.2rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    letter-spacing: 0.05em;
+  }
+
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .cmd { color: var(--green); }
+  .flag { color: var(--yellow); }
+  .comment { color: var(--dim); }
+  .string { color: var(--cyan); }
+
+  /* Table */
+  .pkg-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  .pkg-table th {
+    font-family: 'Share Tech Mono', monospace;
+    text-align: left;
+    color: var(--dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pkg-table td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid rgba(26, 26, 46, 0.5);
+  }
+
+  .pkg-table tr:hover {
+    background: rgba(0, 240, 255, 0.03);
+  }
+
+  .pkg-name {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--cyan);
+  }
+
+  .pkg-ver {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--yellow);
+  }
+
+  .pkg-patched {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--red);
+    border: 1px solid rgba(255, 0, 60, 0.3);
+    padding: 0.1rem 0.35rem;
+    border-radius: 2px;
+    margin-left: 0.4rem;
+  }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 2px solid var(--yellow);
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    background: rgba(252, 238, 10, 0.03);
+    font-size: 0.9rem;
+  }
+
+  blockquote strong { color: var(--yellow); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .footer-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-tag .corp { color: var(--yellow); }
+
+  .footer-line {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(90, 90, 110, 0.5);
+    margin-top: 0.5rem;
+  }
+
+  /* Terminal prompt */
+  .terminal {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .terminal .prompt { color: var(--green); }
+  .terminal .output { color: var(--text); }
+  .terminal .highlight { color: var(--cyan); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header-title { font-size: 1.6rem; }
+    .container { padding: 1rem 1rem 3rem; }
+    .pkg-table { font-size: 0.8rem; }
+    .pkg-table td, .pkg-table th { padding: 0.4rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="container">
+
+  <div class="header">
+    <div class="header-title">RUT240_OPKG</div>
+    <div class="header-sub">COMMUNITY PACKAGE FEED FOR <span class="accent">TELTONIKA RUT240</span></div>
+    <div class="badges">
+      <span class="badge badge-red">ARCH: mips_24kc</span>
+      <span class="badge badge-cyan">TARGET: ath79/generic</span>
+      <span class="badge badge-yellow">SDK: OpenWrt 23.05.5</span>
+      <span class="badge badge-red">SIGNED: usign</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p>Pre-built OpenWrt packages for Teltonika RUT240 routers running firmware with OpenSSL 3.0.</p>
+    <p>Teltonika's official repo ships packages compiled against <code>libopenssl1.1</code> and older <code>libnettle</code> &mdash; libraries that <strong>don't exist</strong> on current RUT240 firmware (<code>RUTX_R_00.07.x</code>). This feed provides correctly compiled replacements built against the OpenSSL 3.0 / <code>libopenssl3</code> that actually ships on the device.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">PACKAGES</div>
+    <table class="pkg-table">
+      <thead>
+        <tr><th>Package</th><th>Version</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pkg-name">radsecproxy</span></td>
+          <td><span class="pkg-ver">1.11.2-1</span></td>
+          <td>RADIUS proxy for UDP/TLS (RadSec) <span class="pkg-patched">PATCHED</span></td>
+        </tr>
+        <tr>
+          <td><span class="pkg-name">vim-full</span></td>
+          <td><span class="pkg-ver">9.0-1</span></td>
+          <td>Vi IMproved &mdash; Normal build, replaces busybox <code>vi</code></td>
+        </tr>
+        <tr>
+          <td><span class="pkg-name">libncurses6</span></td>
+          <td><span class="pkg-ver">6.4-2</span></td>
+          <td>Terminal handling library (Unicode)</td>
+        </tr>
+        <tr>
+          <td><span class="pkg-name">terminfo</span></td>
+          <td><span class="pkg-ver">6.4-2</span></td>
+          <td>Terminal info database (ncurses)</td>
+        </tr>
+        <tr>
+          <td><span class="pkg-name">libnettle8</span></td>
+          <td><span class="pkg-ver">3.9.1-1</span></td>
+          <td>GNU crypto library</td>
+        </tr>
+        <tr>
+          <td><span class="pkg-name">libgmp10</span></td>
+          <td><span class="pkg-ver">6.2.1-1</span></td>
+          <td>GNU Multiple Precision arithmetic library</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">INSTALL</div>
+    <p>This feed is signed with <a href="https://git.openwrt.org/project/usign.git">usign</a>. RUT240 firmware verifies package signatures by default.</p>
+
+    <h4>1 &mdash; Add the signing key</h4>
+    <pre data-label="bash"><code><span class="cmd">wget</span> <span class="flag">-q -O</span> /etc/opkg/keys/99d9bdd209118a07 \
+  https://raw.githubusercontent.com/CyB0rgg/rut240-opkg/main/signing.pub</code></pre>
+
+    <h4>2 &mdash; Add the feed</h4>
+    <pre data-label="bash"><code><span class="cmd">echo</span> <span class="string">"src/gz rut240_community https://cyb0rgg.github.io/rut240-opkg/packages"</span> \
+  &gt;&gt; /etc/opkg/customfeeds.conf</code></pre>
+
+    <h4>3 &mdash; Install</h4>
+    <pre data-label="bash"><code><span class="cmd">opkg</span> update
+
+<span class="comment"># radsecproxy (RadSec/RADIUS proxy)</span>
+<span class="cmd">opkg</span> install radsecproxy <span class="flag">--force-depends --force-overwrite</span>
+
+<span class="comment"># vim-full (replaces busybox vi)</span>
+<span class="cmd">opkg</span> install vim-full <span class="flag">--force-depends</span></code></pre>
+
+    <blockquote>
+      <p><strong>Why <code>--force-depends</code>?</strong> Teltonika's repo ships broken versions of both <code>radsecproxy</code> and <code>vim-full</code> compiled against libraries that don't exist on current firmware. When opkg sees these broken packages alongside ours, it gets confused during dependency resolution and reports "incompatible architectures" even though both are <code>mips_24kc</code>. <code>--force-depends</code> tells opkg to skip the broken candidates. <code>--force-overwrite</code> (radsecproxy only) handles a shared library conflict with Teltonika's pre-installed <code>libmosquitto-ssl</code>.</p>
+    </blockquote>
+  </div>
+
+  <div class="section">
+    <div class="section-title">PACKAGE NOTES</div>
+
+    <h3>radsecproxy</h3>
+    <p>The stock OpenWrt init script for radsecproxy does <strong>not</strong> include <code>procd_set_param stdout</code> / <code>procd_set_param stderr</code> directives. radsecproxy 1.11.x in foreground mode (<code>-f</code>, required for procd) writes all log output to <strong>stderr</strong> &mdash; even when <code>LogDestination x-syslog:///</code> is set in the config. Without the procd stderr routing, logs silently go to <code>/dev/null</code> and <code>logread</code> shows nothing.</p>
+    <p>This package patches the init script to route both stdout and stderr through procd to <code>logd</code>:</p>
+    <pre data-label="init"><code>procd_set_param stdout 1
+procd_set_param stderr 1</code></pre>
+    <p>After installing, logs are visible via <code>logread | grep radsecproxy</code>.</p>
+
+    <h3>vim-full</h3>
+    <p>vim 9.0 will print <code>E1187: Failed to source defaults.vim</code> on startup if no <code>~/.vimrc</code> exists. The <code>vim-runtime</code> package (2.2 MB) is intentionally not included in this feed to save flash space. Create any <code>.vimrc</code> to suppress the error:</p>
+    <pre data-label="bash"><code><span class="cmd">touch</span> ~/.vimrc</code></pre>
+  </div>
+
+  <div class="section">
+    <div class="section-title">BUILD</div>
+    <p>Cross-compiled using the OpenWrt 23.05.5 SDK inside a Docker container:</p>
+    <pre data-label="bash"><code><span class="cmd">docker</span> run <span class="flag">--platform</span> linux/amd64 <span class="flag">-v</span> <span class="string">$(pwd)/output:/output</span> debian:bookworm-slim
+<span class="comment"># Inside container:</span>
+<span class="cmd">apt-get</span> update && <span class="cmd">apt-get</span> install <span class="flag">-y</span> \
+  build-essential gawk unzip file wget python3 rsync ca-certificates libncurses-dev git
+<span class="cmd">wget</span> https://downloads.openwrt.org/releases/23.05.5/targets/ath79/generic/\
+openwrt-sdk-23.05.5-ath79-generic_gcc-12.3.0_musl.Linux-x86_64.tar.xz
+<span class="cmd">tar</span> xf openwrt-sdk-*.tar.xz && <span class="cmd">cd</span> openwrt-sdk-*
+./scripts/feeds update packages base
+./scripts/feeds install radsecproxy libopenssl libnettle
+<span class="cmd">make</span> defconfig
+<span class="cmd">make</span> package/feeds/packages/radsecproxy/compile V=s <span class="flag">-j1</span></code></pre>
+    <p>To build a newer version, edit <code>PKG_VERSION</code> and <code>PKG_HASH</code> in the feed Makefile and remove any stale <code>patches/</code> that don't apply.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">LICENSE</div>
+    <p>Packages retain their original upstream licenses. This repository is provided as-is for the Teltonika RUT240 community.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-tag"><span class="corp">CyB0rgg</span> @ Kiroshi.Group</div>
+    <div class="footer-line">[ FEED ACTIVE // PACKAGES SIGNED // TELTONIKA CAN'T COMPILE FOR SHIT ]</div>
+  </div>
+
+</div>
+</body>
+</html>
