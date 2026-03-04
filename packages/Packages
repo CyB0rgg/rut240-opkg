@@ -37,7 +37,7 @@ Size: 344752
 SHA256sum: 364b6237c0a7e998e70aa8daf464c9a4809515adb73d938792b891e55d9e3b1f
 
 Package: radsecproxy
-Version: 1.9.1-1
+Version: 1.11.2-1
 Depends: libc, libopenssl3, libpthread, libnettle8
 Source: feeds/packages/net/radsecproxy
 SourceName: radsecproxy
@@ -48,9 +48,9 @@ SourceDateEpoch: 1656885722
 CPE-ID: cpe:/a:uninett:radsecproxy
 Maintainer: Toke Høiland-Jørgensen <toke@toke.dk>
 Architecture: mips_24kc
-Installed-Size: 47682
+Installed-Size: 56488
 Description:  A generic radius proxy for UDP/TLS (RadSec)
-Filename: radsecproxy_1.9.1-1_mips_24kc.ipk
-Size: 47852
-SHA256sum: ae6fefbbc0b057a7804c41b405d959844a2aed294bb78269bb8005a6fe3791da
+Filename: radsecproxy_1.11.2-1_mips_24kc.ipk
+Size: 56722
+SHA256sum: 1bafaa9786a665453117431add862249628ea985b74255b383e46a955c610e94
 

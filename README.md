@@ -14,7 +14,7 @@ Teltonika's official package repository ships several packages compiled against 
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| `radsecproxy` | 1.9.1-1 | Generic RADIUS proxy for UDP/TLS (RadSec) |
+| `radsecproxy` | 1.11.2-1 | Generic RADIUS proxy for UDP/TLS (RadSec) |
 | `libnettle8` | 3.9.1-1 | GNU crypto library |
 | `libgmp10` | 6.2.1-1 | GNU Multiple Precision arithmetic library |
 
@@ -61,6 +61,8 @@ tar xf openwrt-sdk-*.tar.xz && cd openwrt-sdk-*
 make defconfig
 make package/feeds/packages/radsecproxy/compile V=s -j1
 ```
+
+To build a newer version than what the OpenWrt 23.05 feed ships, edit `PKG_VERSION` and `PKG_HASH` in `feeds/packages/net/radsecproxy/Makefile` and remove any stale patches from the `patches/` directory before compiling.
 
 ## License
 
