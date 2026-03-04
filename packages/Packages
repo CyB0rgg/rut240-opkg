@@ -1,0 +1,56 @@
+Package: libgmp10
+Version: 6.2.1-1
+Depends: libc
+Provides: libgmp
+Source: feeds/base/package/libs/gmp
+SourceName: libgmp
+License: GPL-2.0-or-later
+Section: libs
+SourceDateEpoch: 1695847021
+ABIVersion: 10
+CPE-ID: cpe:/a:gmplib:gmp
+Architecture: mips_24kc
+Installed-Size: 216250
+Description:  GMP is a free library for arbitrary precision arithmetic, operating on
+ signed integers, rational numbers, and floating point numbers.
+Filename: libgmp10_6.2.1-1_mips_24kc.ipk
+Size: 216892
+SHA256sum: 58a6c6c2b8cb0c038b366fa1111ca0bac937d1eff0b7bffd364da2d1e4487893
+
+Package: libnettle8
+Version: 3.9.1-1
+Depends: libc, libgmp10
+Provides: libnettle
+Source: feeds/base/package/libs/nettle
+SourceName: libnettle
+License: GPL-2.0-or-later
+LicenseFiles: COPYING
+Section: libs
+SourceDateEpoch: 1693172967
+ABIVersion: 8
+CPE-ID: cpe:/a:nettle_project:nettle
+Architecture: mips_24kc
+Installed-Size: 345503
+Description:  GNU crypto library
+Filename: libnettle8_3.9.1-1_mips_24kc.ipk
+Size: 344752
+SHA256sum: 364b6237c0a7e998e70aa8daf464c9a4809515adb73d938792b891e55d9e3b1f
+
+Package: radsecproxy
+Version: 1.9.1-1
+Depends: libc, libopenssl3, libpthread, libnettle8
+Source: feeds/packages/net/radsecproxy
+SourceName: radsecproxy
+License: BSD-3-CLAUSE
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1656885722
+CPE-ID: cpe:/a:uninett:radsecproxy
+Maintainer: Toke Høiland-Jørgensen <toke@toke.dk>
+Architecture: mips_24kc
+Installed-Size: 47682
+Description:  A generic radius proxy for UDP/TLS (RadSec)
+Filename: radsecproxy_1.9.1-1_mips_24kc.ipk
+Size: 47852
+SHA256sum: ae6fefbbc0b057a7804c41b405d959844a2aed294bb78269bb8005a6fe3791da
+
