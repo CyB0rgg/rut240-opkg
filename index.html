@@ -337,12 +337,61 @@
   .terminal .output { color: var(--text); }
   .terminal .highlight { color: var(--cyan); }
 
+  /* Repo link */
+  .repo-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--dim);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-bottom: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .repo-link:hover {
+    color: var(--cyan);
+    border-color: rgba(0, 240, 255, 0.3);
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+
   /* Responsive */
   @media (max-width: 600px) {
     .header-title { font-size: 1.6rem; }
-    .container { padding: 1rem 1rem 3rem; }
-    .pkg-table { font-size: 0.8rem; }
-    .pkg-table td, .pkg-table th { padding: 0.4rem 0.5rem; }
+    .container { padding: 1rem 0.8rem 3rem; }
+
+    pre {
+      padding: 0.8rem;
+      border-radius: 2px;
+    }
+
+    pre code {
+      font-size: 0.68rem;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    code {
+      font-size: 0.75rem;
+      word-break: break-all;
+    }
+
+    .pkg-table { font-size: 0.75rem; }
+    .pkg-table td, .pkg-table th { padding: 0.35rem 0.4rem; }
+
+    .section-title { font-size: 0.95rem; }
+    h3 { font-size: 0.85rem; }
+    h4 { font-size: 0.8rem; }
+    p { font-size: 0.85rem; }
+
+    blockquote { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+
+    .badges { gap: 0.3rem; }
+    .badge { font-size: 0.6rem; padding: 0.15rem 0.4rem; }
+
+    .footer-line { font-size: 0.55rem; }
   }
 </style>
 </head>
@@ -358,6 +407,7 @@
       <span class="badge badge-cyan">TARGET: ath79/generic</span>
       <span class="badge badge-yellow">SDK: OpenWrt 23.05.5</span>
       <span class="badge badge-red">SIGNED: usign</span>
+      <a href="https://github.com/CyB0rgg/rut240-opkg" class="repo-link" target="_blank">GITHUB</a>
     </div>
   </div>
 
